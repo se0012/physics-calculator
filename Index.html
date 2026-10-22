@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Physics Calculator | เครื่องคิดเลขฟิสิกส์</title>
+<style>
+:root{--bg:#0b1220;--panel:#121d2e;--panel2:#18263b;--line:#2a3b54;--text:#edf4ff;--muted:#9db0ca;--accent:#66e3c4;--accent2:#8db8ff;--danger:#ff7d8a;--shadow:0 14px 35px #0002}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top left,#142640 0,transparent 45%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+button,input,select{font:inherit}button{cursor:pointer}.app{max-width:1180px;margin:auto;padding:22px 16px 48px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}.brand{display:flex;align-items:center;gap:12px}.logo{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,var(--accent),#83aaff);color:#07131e;font-size:24px;font-weight:900}.brand h1{font-size:clamp(20px,3vw,28px);margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}.pill{border:1px solid var(--line);border-radius:999px;padding:7px 12px;color:var(--muted);font-size:12px;white-space:nowrap}
+.hero{margin-bottom:22px}.hero h2{font-size:clamp(25px,4vw,38px);line-height:1.2;margin:0 0 10px;letter-spacing:-.7px}.hero h2 span{color:var(--accent)}.hero p{margin:0;color:var(--muted);max-width:720px}
+.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.8fr);gap:18px;align-items:start}.panel{background:linear-gradient(180deg,#152237f5,#111b2bf5);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}.panel-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.panel-head h3{margin:0;font-size:17px}.panel-body{padding:20px}.step{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent);font-weight:800;margin-bottom:8px}
+label{display:block;font-size:13px;color:#c4d2e6;margin-bottom:7px}.field{margin-bottom:17px}select,input{width:100%;background:#0c1524;color:var(--text);border:1px solid #30435e;border-radius:11px;padding:12px 13px;outline:none;min-height:46px}select:focus,input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #66e3c41c}select{appearance:auto}.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field-grid .field{margin-bottom:12px}.formula-note{padding:13px 15px;background:#0c1727;border:1px solid #263b54;border-radius:12px;margin:4px 0 18px}.formula-note .eq{font-size:19px;font-weight:700;color:var(--accent);overflow-wrap:anywhere}.formula-note p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:11px;padding:12px 16px;font-weight:750;transition:transform .15s,opacity .15s}.btn:active{transform:scale(.98)}.primary{background:var(--accent);color:#082018;flex:1}.secondary{background:#21324a;color:var(--text);border:1px solid #354a66}.danger{color:#ffadb5;background:#3a202b;border:1px solid #60313e}.result{margin-top:18px;display:none;border:1px solid #376e67;background:linear-gradient(140deg,#153a3a,#142c38);border-radius:15px;padding:17px}.result.show{display:block}.result-label{font-size:12px;color:#a8dcd3}.result-value{font-size:clamp(25px,4vw,34px);font-weight:850;letter-spacing:-.5px;overflow-wrap:anywhere;margin:4px 0}.result-unit{color:#c5e7e1;font-size:14px}.steps{margin-top:12px;padding-top:12px;border-top:1px solid #37605f;color:#c8d9e5;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}
+.side-stack{display:grid;gap:18px}.quick{display:grid;grid-template-columns:1fr 1fr;gap:9px}.quick button{text-align:left;border:1px solid var(--line);background:#0e192a;color:var(--text);padding:12px;border-radius:12px}.quick button:hover{border-color:var(--accent)}.quick strong{display:block;font-size:13px}.quick span{font-size:11px;color:var(--muted)}
+.history-list{display:grid;gap:10px}.history-item{background:#0c1727;border:1px solid #26384f;border-radius:12px;padding:12px}.history-top{display:flex;justify-content:space-between;gap:10px;align-items:start}.history-name{font-size:13px;font-weight:750}.history-time{font-size:10px;color:var(--muted);white-space:nowrap}.history-eq{font-size:12px;color:var(--muted);margin:4px 0}.history-answer{font-size:17px;font-weight:800;color:var(--accent2);overflow-wrap:anywhere}.history-actions{display:flex;gap:7px;margin-top:9px}.history-actions button{font-size:11px;padding:6px 9px;border-radius:8px;background:#203149;color:var(--text);border:1px solid #354861}.empty{color:var(--muted);font-size:13px;text-align:center;padding:22px 8px}.history-footer{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px}.small{font-size:11px;color:var(--muted)}.tiny-btn{border:1px solid var(--line);background:#18263b;color:#dce8f8;border-radius:8px;padding:7px 10px;font-size:12px}
+footer{margin-top:22px;text-align:center;color:#7388a4;font-size:12px}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#e1fff5;color:#0c2a25;border-radius:12px;padding:11px 16px;font-size:13px;font-weight:700;box-shadow:var(--shadow);display:none;z-index:9}.toast.show{display:block}
+@media(max-width:820px){.layout{grid-template-columns:1fr}.side-stack{grid-template-columns:1fr}.app{padding:16px 12px 32px}.panel-body{padding:16px}.panel-head{padding:15px 16px}}
+@media(max-width:480px){header{align-items:flex-start}.pill{font-size:10px;padding:6px 8px}.field-grid{grid-template-columns:1fr;gap:0}.quick{grid-template-columns:1fr 1fr}.brand p{font-size:11px}.hero h2{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand"><div class="logo">∑</div><div><h1>Physics Calculator</h1><p>เครื่องคิดเลขฟิสิกส์ • สูตรและวิธีทำ</p></div></div>
+  <div class="pill">เวอร์ชันใช้งานออฟไลน์</div>
+</header>
+<section class="hero">
+  <h2>คิดเลขฟิสิกส์ให้เป็นเรื่อง <span>ง่ายขึ้น</span></h2>
+  <p>เลือกหมวด เลือกสูตร ใส่ค่าตัวแปร แล้วดูคำตอบพร้อมวิธีแทนค่าได้ในหน้าเดียว ประวัติบันทึกไว้ในอุปกรณ์นี้</p>
+</section>
+<div class="layout">
+  <main class="panel">
+    <div class="panel-head"><h3>เครื่องคำนวณ</h3><span class="small" id="formulaCount"></span></div>
+    <div class="panel-body">
+      <div class="step">01 / เลือกหัวข้อ</div>
+      <div class="field"><label for="category">หมวดฟิสิกส์</label><select id="category"></select></div>
+      <div class="field"><label for="formula">สูตรที่ต้องการใช้</label><select id="formula"></select></div>
+      <div class="formula-note"><div class="eq" id="equation">เลือกสูตรเพื่อเริ่มต้น</div><p id="description">ระบบจะแสดงสมการและคำอธิบายตรงนี้</p></div>
+      <div class="step">02 / กรอกตัวแปร</div>
+      <div id="inputs" class="field-grid"></div>
+      <div class="actions"><button class="btn primary" id="calculate">คำนวณผลลัพธ์ ↗</button><button class="btn secondary" id="reset">ล้างค่า</button></div>
+      <div class="result" id="result" aria-live="polite"><div class="result-label">คำตอบ</div><div class="result-value" id="resultValue">—</div><div class="result-unit" id="resultUnit"></div><div class="steps" id="resultSteps"></div></div>
+    </div>
+  </main>
+  <aside class="side-stack">
+    <section class="panel">
+      <div class="panel-head"><h3>สูตรยอดนิยม</h3></div>
+      <div class="panel-body"><div class="quick" id="quick"></div></div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h3>ประวัติการคำนวณ</h3><span class="small" id="historyCount">0 รายการ</span></div>
+      <div class="panel-body"><div class="history-list" id="historyList"></div><div class="history-footer"><span class="small">บันทึกในเบราว์เซอร์เครื่องนี้</span><button class="tiny-btn danger" id="clearHistory">ลบประวัติ</button></div></div>
+    </section>
+  </aside>
+</div>
+<footer>ตรวจสอบหน่วยและเงื่อนไขของโจทย์ทุกครั้ง • ค่าที่ใช้ต้องอยู่ในระบบหน่วยเดียวกัน (SI) เว้นแต่ระบุเป็นอย่างอื่น</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const F = [
+{id:'vavg',cat:'กลศาสตร์',name:'ความเร็วเฉลี่ย',eq:'v = s / t',desc:'ระยะทางหารด้วยเวลาที่ใช้',vars:[['s','ระยะทาง s','m'],['t','เวลา t','s']],out:'ความเร็วเฉลี่ย',unit:'m/s',calc:v=>v.s/v.t,sub:v=>`v = ${v.s} / ${v.t}`},
+{id:'acc',cat:'กลศาสตร์',name:'ความเร่ง',eq:'a = (v − u) / t',desc:'u คือความเร็วต้น และ v คือความเร็วปลาย',vars:[['v','ความเร็วปลาย v','m/s'],['u','ความเร็วต้น u','m/s'],['t','เวลา t','s']],out:'ความเร่ง',unit:'m/s²',calc:v=>(v.v-v.u)/v.t,sub:v=>`a = (${v.v} − ${v.u}) / ${v.t}`},
+{id:'suvat1',cat:'กลศาสตร์',name:'ความเร็วปลาย (ความเร่งคงตัว)',eq:'v = u + at',desc:'ใช้เมื่อความเร่งคงตัว',vars:[['u','ความเร็วต้น u','m/s'],['a','ความเร่ง a','m/s²'],['t','เวลา t','s']],out:'ความเร็วปลาย',unit:'m/s',calc:v=>v.u+v.a*v.t,sub:v=>`v = ${v.u} + (${v.a} × ${v.t})`},
+{id:'suvat2',cat:'กลศาสตร์',name:'การกระจัด (ความเร่งคงตัว)',eq:'s = ut + ½at²',desc:'การกระจัดจากความเร็วต้นและความเร่งคงตัว',vars:[['u','ความเร็วต้น u','m/s'],['t','เวลา t','s'],['a','ความเร่ง a','m/s²']],out:'การกระจัด',unit:'m',calc:v=>v.u*v.t+0.5*v.a*v.t*v.t,sub:v=>`s = (${v.u} × ${v.t}) + ½ × ${v.a} × ${v.t}²`},
+{id:'suvat3',cat:'กลศาสตร์',name:'ความเร็วปลายยกกำลังสอง',eq:'v² = u² + 2as',desc:'คำนวณขนาดความเร็วปลายจากการกระจัด',vars:[['u','ความเร็วต้น u','m/s'],['a','ความเร่ง a','m/s²'],['s','การกระจัด s','m']],out:'ขนาดความเร็วปลาย',unit:'m/s',calc:v=>{let x=v.u*v.u+2*v.a*v.s;if(x<0)throw Error('ค่าภายในรากที่สองติดลบ');return Math.sqrt(x)},sub:v=>`v = √(${v.u}² + 2 × ${v.a} × ${v.s})`},
+{id:'force',cat:'กลศาสตร์',name:'กฎข้อที่ 2 ของนิวตัน',eq:'F = ma',desc:'แรงลัพธ์เท่ากับมวลคูณความเร่ง',vars:[['m','มวล m','kg'],['a','ความเร่ง a','m/s²']],out:'แรงลัพธ์',unit:'N',calc:v=>v.m*v.a,sub:v=>`F = ${v.m} × ${v.a}`},
+{id:'weight',cat:'กลศาสตร์',name:'น้ำหนัก',eq:'W = mg',desc:'ใช้ g ≈ 9.81 m/s² ใกล้พื้นโลก',vars:[['m','มวล m','kg'],['g','ความเร่งโน้มถ่วง g','m/s²',9.81]],out:'น้ำหนัก',unit:'N',calc:v=>v.m*v.g,sub:v=>`W = ${v.m} × ${v.g}`},
+{id:'momentum',cat:'กลศาสตร์',name:'โมเมนตัม',eq:'p = mv',desc:'โมเมนตัมของวัตถุ',vars:[['m','มวล m','kg'],['v','ความเร็ว v','m/s']],out:'โมเมนตัม',unit:'kg·m/s',calc:v=>v.m*v.v,sub:v=>`p = ${v.m} × ${v.v}`},
+{id:'ke',cat:'กลศาสตร์',name:'พลังงานจลน์',eq:'Eₖ = ½mv²',desc:'พลังงานเนื่องจากการเคลื่อนที่',vars:[['m','มวล m','kg'],['v','ความเร็ว v','m/s']],out:'พลังงานจลน์',unit:'J',calc:v=>0.5*v.m*v.v*v.v,sub:v=>`Eₖ = ½ × ${v.m} × ${v.v}²`},
+{id:'pe',cat:'กลศาสตร์',name:'พลังงานศักย์โน้มถ่วง',eq:'Eₚ = mgh',desc:'อ้างอิงระดับความสูงที่กำหนด',vars:[['m','มวล m','kg'],['g','ความเร่งโน้มถ่วง g','m/s²',9.81],['h','ความสูง h','m']],out:'พลังงานศักย์',unit:'J',calc:v=>v.m*v.g*v.h,sub:v=>`Eₚ = ${v.m} × ${v.g} × ${v.h}`},
+{id:'work',cat:'กลศาสตร์',name:'งานจากแรงขนานการเคลื่อนที่',eq:'W = Fs',desc:'แรงมีทิศเดียวกับการกระจัด',vars:[['F','แรง F','N'],['s','การกระจัด s','m']],out:'งาน',unit:'J',calc:v=>v.F*v.s,sub:v=>`W = ${v.F} × ${v.s}`},
+{id:'power',cat:'กลศาสตร์',name:'กำลังเฉลี่ย',eq:'P = W / t',desc:'งานที่ทำได้ต่อหน่วยเวลา',vars:[['W','งาน W','J'],['t','เวลา t','s']],out:'กำลัง',unit:'W',calc:v=>v.W/v.t,sub:v=>`P = ${v.W} / ${v.t}`},
+{id:'pressure',cat:'กลศาสตร์',name:'ความดัน',eq:'P = F / A',desc:'แรงตั้งฉากต่อพื้นที่',vars:[['F','แรงตั้งฉาก F','N'],['A','พื้นที่ A','m²']],out:'ความดัน',unit:'Pa',calc:v=>v.F/v.A,sub:v=>`P = ${v.F} / ${v.A}`},
+{id:'density',cat:'กลศาสตร์',name:'ความหนาแน่น',eq:'ρ = m / V',desc:'มวลต่อปริมาตร',vars:[['m','มวล m','kg'],['V','ปริมาตร V','m³']],out:'ความหนาแน่น',unit:'kg/m³',calc:v=>v.m/v.V,sub:v=>`ρ = ${v.m} / ${v.V}`},
+{id:'spring',cat:'กลศาสตร์',name:'กฎของฮุก',eq:'F = kx',desc:'ขนาดแรงคืนตัวของสปริงในช่วงยืดหยุ่น',vars:[['k','ค่าคงตัวสปริง k','N/m'],['x','ระยะยืด/หด x','m']],out:'ขนาดแรงสปริง',unit:'N',calc:v=>v.k*v.x,sub:v=>`F = ${v.k} × ${v.x}`},
+{id:'centripetal',cat:'กลศาสตร์',name:'ความเร่งสู่ศูนย์กลาง',eq:'a꜀ = v² / r',desc:'การเคลื่อนที่เป็นวงกลมด้วยอัตราเร็ว v',vars:[['v','อัตราเร็ว v','m/s'],['r','รัศมี r','m']],out:'ความเร่งสู่ศูนย์กลาง',unit:'m/s²',calc:v=>v.v*v.v/v.r,sub:v=>`a꜀ = ${v.v}² / ${v.r}`},
+{id:'ohm',cat:'ไฟฟ้า',name:'กฎของโอห์ม',eq:'V = IR',desc:'แรงดันไฟฟ้าเท่ากับกระแสคูณความต้านทาน',vars:[['I','กระแส I','A'],['R','ความต้านทาน R','Ω']],out:'แรงดันไฟฟ้า',unit:'V',calc:v=>v.I*v.R,sub:v=>`V = ${v.I} × ${v.R}`},
+{id:'electricpower',cat:'ไฟฟ้า',name:'กำลังไฟฟ้า',eq:'P = VI',desc:'กำลังไฟฟ้าจากแรงดันและกระแส',vars:[['V','แรงดัน V','V'],['I','กระแส I','A']],out:'กำลังไฟฟ้า',unit:'W',calc:v=>v.V*v.I,sub:v=>`P = ${v.V} × ${v.I}`},
+{id:'charge',cat:'ไฟฟ้า',name:'ประจุไฟฟ้าจากกระแส',eq:'Q = It',desc:'กระแสคงตัวไหลเป็นเวลา t',vars:[['I','กระแส I','A'],['t','เวลา t','s']],out:'ประจุไฟฟ้า',unit:'C',calc:v=>v.I*v.t,sub:v=>`Q = ${v.I} × ${v.t}`},
+{id:'coulomb',cat:'ไฟฟ้า',name:'กฎคูลอมบ์',eq:'F = k|q₁q₂| / r²',desc:'ขนาดแรงระหว่างประจุจุดในสุญญากาศ โดย k ≈ 8.99×10⁹',vars:[['q1','ประจุ q₁','C'],['q2','ประจุ q₂','C'],['r','ระยะห่าง r','m'],['k','ค่าคงตัวคูลอมบ์ k','N·m²/C²',8.99e9]],out:'ขนาดแรงไฟฟ้า',unit:'N',calc:v=>v.k*Math.abs(v.q1*v.q2)/(v.r*v.r),sub:v=>`F = ${v.k} × |${v.q1} × ${v.q2}| / ${v.r}²`},
+{id:'capacitance',cat:'ไฟฟ้า',name:'ประจุในตัวเก็บประจุ',eq:'Q = CV',desc:'ประจุไฟฟ้าสำหรับตัวเก็บประจุ',vars:[['C','ความจุ C','F'],['V','แรงดัน V','V']],out:'ประจุไฟฟ้า',unit:'C',calc:v=>v.C*v.V,sub:v=>`Q = ${v.C} × ${v.V}`},
+{id:'resistors',cat:'ไฟฟ้า',name:'ตัวต้านทานต่ออนุกรม',eq:'Rₜ = R₁ + R₂ + …',desc:'ผลรวมความต้านทานเมื่อต่ออนุกรม 2 ตัว',vars:[['R1','ความต้านทาน R₁','Ω'],['R2','ความต้านทาน R₂','Ω']],out:'ความต้านทานรวม',unit:'Ω',calc:v=>v.R1+v.R2,sub:v=>`Rₜ = ${v.R1} + ${v.R2}`},
+{id:'wave',cat:'คลื่นและเสียง',name:'อัตราเร็วคลื่น',eq:'v = fλ',desc:'ความถี่คูณความยาวคลื่น',vars:[['f','ความถี่ f','Hz'],['lambda','ความยาวคลื่น λ','m']],out:'อัตราเร็วคลื่น',unit:'m/s',calc:v=>v.f*v.lambda,sub:v=>`v = ${v.f} × ${v.lambda}`},
+{id:'frequency',cat:'คลื่นและเสียง',name:'ความถี่และคาบ',eq:'f = 1 / T',desc:'ความถี่คือส่วนกลับของคาบ',vars:[['T','คาบ T','s']],out:'ความถี่',unit:'Hz',calc:v=>1/v.T,sub:v=>`f = 1 / ${v.T}`},
+{id:'period',cat:'คลื่นและเสียง',name:'คาบจากความถี่',eq:'T = 1 / f',desc:'คาบคือเวลาต่อหนึ่งรอบ',vars:[['f','ความถี่ f','Hz']],out:'คาบ',unit:'s',calc:v=>1/v.f,sub:v=>`T = 1 / ${v.f}`},
+{id:'pendulum',cat:'คลื่นและเสียง',name:'คาบลูกตุ้มอย่างง่าย',eq:'T = 2π√(L/g)',desc:'ใช้เมื่อมุมแกว่งเล็กและไม่คิดแรงต้าน',vars:[['L','ความยาวเชือก L','m'],['g','ความเร่งโน้มถ่วง g','m/s²',9.81]],out:'คาบการแกว่ง',unit:'s',calc:v=>2*Math.PI*Math.sqrt(v.L/v.g),sub:v=>`T = 2π√(${v.L}/${v.g})`},
+{id:'heat',cat:'ความร้อนและแก๊ส',name:'พลังงานความร้อน',eq:'Q = mcΔT',desc:'ความร้อนที่ทำให้อุณหภูมิเปลี่ยน โดยไม่เปลี่ยนสถานะ',vars:[['m','มวล m','kg'],['c','ความร้อนจำเพาะ c','J/(kg·K)'],['dT','การเปลี่ยนแปลงอุณหภูมิ ΔT','K']],out:'พลังงานความร้อน',unit:'J',calc:v=>v.m*v.c*v.dT,sub:v=>`Q = ${v.m} × ${v.c} × ${v.dT}`},
+{id:'latent',cat:'ความร้อนและแก๊ส',name:'ความร้อนแฝง',eq:'Q = mL',desc:'พลังงานสำหรับเปลี่ยนสถานะโดยอุณหภูมิคงที่',vars:[['m','มวล m','kg'],['L','ความร้อนแฝงจำเพาะ L','J/kg']],out:'พลังงานความร้อน',unit:'J',calc:v=>v.m*v.L,sub:v=>`Q = ${v.m} × ${v.L}`},
+{id:'idealgas',cat:'ความร้อนและแก๊ส',name:'สมการแก๊สอุดมคติ',eq:'PV = nRT',desc:'คำนวณ PV จากจำนวนโมลและอุณหภูมิสัมบูรณ์',vars:[['n','จำนวนโมล n','mol'],['R','ค่าคงตัวแก๊ส R','J/(mol·K)',8.314],['T','อุณหภูมิ T','K']],out:'ผลคูณความดันและปริมาตร PV',unit:'J',calc:v=>v.n*v.R*v.T,sub:v=>`PV = ${v.n} × ${v.R} × ${v.T}`},
+{id:'efficiency',cat:'ความร้อนและแก๊ส',name:'ประสิทธิภาพ',eq:'η = (Eₒᵤₜ / Eᵢₙ) × 100%',desc:'อัตราส่วนพลังงานที่ได้ต่อพลังงานที่ใส่เข้า คูณ 100',vars:[['out','พลังงานที่ได้ Eout','J'],['in','พลังงานที่ใส่เข้า Ein','J']],out:'ประสิทธิภาพ',unit:'%',calc:v=>100*v.out/v.in,sub:v=>`η = (${v.out} / ${v.in}) × 100%`},
+{id:'lens',cat:'แสงและทัศนศาสตร์',name:'สมการเลนส์บาง',eq:'1/f = 1/do + 1/di',desc:'คำนวณระยะภาพ โดยใช้เครื่องหมายตามข้อตกลงของเลนส์',vars:[['f','ความยาวโฟกัส f','m'],['do','ระยะวัตถุ do','m']],out:'ระยะภาพ di',unit:'m',calc:v=>1/(1/v.f-1/v.do),sub:v=>`di = 1 / (1/${v.f} − 1/${v.do})`},
+{id:'magnification',cat:'แสงและทัศนศาสตร์',name:'กำลังขยายของเลนส์',eq:'m = −di / do',desc:'เครื่องหมายลบแสดงทิศทางภาพตามข้อตกลงเครื่องหมาย',vars:[['di','ระยะภาพ di','m'],['do','ระยะวัตถุ do','m']],out:'กำลังขยาย',unit:'เท่า',calc:v=>-v.di/v.do,sub:v=>`m = −${v.di} / ${v.do}`},
+{id:'snell',cat:'แสงและทัศนศาสตร์',name:'กฎของสเนลล์',eq:'n₁ sinθ₁ = n₂ sinθ₂',desc:'มุมวัดจากเส้นแนวฉาก หน่วยองศา',vars:[['n1','ดัชนีหักเห n₁','ไม่มีหน่วย'],['theta1','มุมตกกระทบ θ₁ (องศา)','°'],['n2','ดัชนีหักเห n₂','ไม่มีหน่วย']],out:'มุมหักเห θ₂',unit:'องศา',calc:v=>{let x=v.n1*Math.sin(v.theta1*Math.PI/180)/v.n2;if(Math.abs(x)>1)throw Error('เกิดการสะท้อนกลับหมด: ไม่มีมุมหักเหจริง');return Math.asin(x)*180/Math.PI},sub:v=>`θ₂ = asin((${v.n1} × sin(${v.theta1}°)) / ${v.n2})`},
+{id:'photon',cat:'ฟิสิกส์สมัยใหม่',name:'พลังงานโฟตอน',eq:'E = hf',desc:'h ≈ 6.62607015×10⁻³⁴ J·s',vars:[['h','ค่าคงตัวพลังค์ h','J·s',6.62607015e-34],['f','ความถี่ f','Hz']],out:'พลังงานโฟตอน',unit:'J',calc:v=>v.h*v.f,sub:v=>`E = ${v.h} × ${v.f}`},
+{id:'massenergy',cat:'ฟิสิกส์สมัยใหม่',name:'สมมูลมวล-พลังงาน',eq:'E = mc²',desc:'c = 299,792,458 m/s',vars:[['m','มวล m','kg'],['c','อัตราเร็วแสง c','m/s',299792458]],out:'พลังงาน',unit:'J',calc:v=>v.m*v.c*v.c,sub:v=>`E = ${v.m} × ${v.c}²`},
+{id:'debroglie',cat:'ฟิสิกส์สมัยใหม่',name:'ความยาวคลื่นเดอบรอยล์',eq:'λ = h / p',desc:'ใช้โมเมนตัม p และค่าคงตัวพลังค์ h',vars:[['h','ค่าคงตัวพลังค์ h','J·s',6.62607015e-34],['p','โมเมนตัม p','kg·m/s']],out:'ความยาวคลื่น',unit:'m',calc:v=>v.h/v.p,sub:v=>`λ = ${v.h} / ${v.p}`}
+];
+const $=id=>document.getElementById(id);
+let selectedId=F[0].id, latest=null;
+const categories=[...new Set(F.map(x=>x.cat))];
+function init(){
+ $('category').innerHTML=categories.map(c=>`<option>${c}</option>`).join('');
+ $('category').addEventListener('change',populateFormulas);
+ $('formula').addEventListener('change',renderInputs);
+ $('calculate').addEventListener('click',calculate);
+ $('reset').addEventListener('click',resetInputs);
+ $('clearHistory').addEventListener('click',clearHistory);
+ populateFormulas();renderQuick();renderHistory();
+ $('formulaCount').textContent=`${F.length} สูตร`;
+}
+function current(){return F.find(f=>f.id===$('formula').value)||F[0]}
+function populateFormulas(){
+ const list=F.filter(f=>f.cat===$('category').value);
+ $('formula').innerHTML=list.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+ renderInputs();
+}
+function renderInputs(){
+ const f=current();selectedId=f.id;
+ $('equation').textContent=f.eq;$('description').textContent=f.desc;
+ $('inputs').innerHTML=f.vars.map(([key,label,unit,def])=>`<div class="field"><label for="v_${key}">${label} <span style="color:#7e94b2">(${unit})</span></label><input id="v_${key}" type="number" inputmode="decimal" step="any" placeholder="${def!==undefined?def:'กรอกค่า'}" ${def!==undefined?`value="${def}"`:''}></div>`).join('');
+ $('result').classList.remove('show');latest=null;
+}
+function fmt(n){if(!Number.isFinite(n))return String(n);if(n===0)return '0';let a=Math.abs(n);if(a>=1e7||a<1e-4)return n.toExponential(6).replace(/\.?0+e/,'e');return Number(n.toPrecision(9)).toLocaleString('en-US',{maximumFractionDigits:9,useGrouping:false})}
+function calculate(){
+ const f=current(),v={};
+ try{
+  for(const [key,label] of f.vars){const el=$('v_'+key);if(!el||el.value.trim()==='')throw Error(`กรุณากรอก${label}`);const n=Number(el.value);if(!Number.isFinite(n))throw Error(`ค่า${label}ไม่ถูกต้อง`);v[key]=n;}
+  for(const [key,label] of f.vars){if(['t','T','A','V','r','R','C','f','L','p','do','g','m','in','n','k','lambda','c'].includes(key)&&v[key]===0)throw Error(`ตัวแปร ${label} ต้องไม่เป็นศูนย์สำหรับสูตรนี้`);}
+  const answer=f.calc(v);if(!Number.isFinite(answer))throw Error('คำนวณไม่ได้ โปรดตรวจสอบค่าตัวแปรและหน่วย');
+  $('resultValue').textContent=fmt(answer);$('resultUnit').textContent=`${f.out} (${f.unit})`;
+  $('resultSteps').textContent=`สมการ: ${f.eq}\nแทนค่า: ${f.sub(v)}\nคำตอบ: ${fmt(answer)} ${f.unit}`;
+  $('result').classList.add('show');
+  latest={id:f.id,name:f.name,cat:f.cat,eq:f.eq,sub:f.sub(v),answer:fmt(answer),unit:f.unit,out:f.out,time:new Date().toISOString(),values:v};
+  saveHistory(latest);renderHistory();
+ }catch(e){toast(e.message||'เกิดข้อผิดพลาด');}
+}
+function resetInputs(){renderInputs();toast('ล้างค่าตัวแปรแล้ว')}
+function renderQuick(){
+ const ids=['force','ke','ohm','wave','heat','massenergy'];
+ $('quick').innerHTML=ids.map(id=>{const f=F.find(x=>x.id===id);return `<button data-id="${id}"><strong>${f.name}</strong><span>${f.eq}</span></button>`}).join('');
+ $('quick').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>selectFormula(b.dataset.id)));
+}
+function selectFormula(id){
+ const f=F.find(x=>x.id===id);if(!f)return;
+ $('category').value=f.cat;populateFormulas();$('formula').value=f.id;renderInputs();window.scrollTo({top:0,behavior:'smooth'});
+}
+function getHistory(){try{return JSON.parse(localStorage.getItem('physicsCalcHistory')||'[]')}catch{return []}}
+function saveHistory(item){try{const h=getHistory();h.unshift(item);localStorage.setItem('physicsCalcHistory',JSON.stringify(h.slice(0,50)))}catch{toast('บันทึกประวัติไม่ได้: พื้นที่จัดเก็บอาจถูกปิด');}}
+function renderHistory(){
+ const h=getHistory();$('historyCount').textContent=`${h.length} รายการ`;
+ if(!h.length){$('historyList').innerHTML='<div class="empty">ยังไม่มีประวัติ<br>ผลการคำนวณจะแสดงที่นี่</div>';return}
+ $('historyList').innerHTML=h.map((x,i)=>`<div class="history-item"><div class="history-top"><div class="history-name">${escapeHTML(x.name)}</div><div class="history-time">${new Date(x.time).toLocaleString('th-TH',{dateStyle:'short',timeStyle:'short'})}</div></div><div class="history-eq">${escapeHTML(x.eq)} · ${escapeHTML(x.cat)}</div><div class="history-answer">${escapeHTML(x.answer)} ${escapeHTML(x.unit)}</div><div class="history-actions"><button data-load="${i}">ใช้สูตรนี้อีก</button><button data-detail="${i}">ดูวิธีทำ</button></div></div>`).join('');
+ $('historyList').querySelectorAll('[data-load]').forEach(b=>b.addEventListener('click',()=>{const x=h[+b.dataset.load];selectFormula(x.id);if(x.values)Object.entries(x.values).forEach(([k,val])=>{const el=$('v_'+k);if(el)el.value=val});toast('เรียกสูตรและค่าจากประวัติแล้ว')}));
+ $('historyList').querySelectorAll('[data-detail]').forEach(b=>b.addEventListener('click',()=>{const x=h[+b.dataset.detail];selectFormula(x.id);if(x.values)Object.entries(x.values).forEach(([k,val])=>{const el=$('v_'+k);if(el)el.value=val});$('resultValue').textContent=x.answer;$('resultUnit').textContent=`${x.out} (${x.unit})`;$('resultSteps').textContent=`สมการ: ${x.eq}\nแทนค่า: ${x.sub}\nคำตอบ: ${x.answer} ${x.unit}`;$('result').classList.add('show');window.scrollTo({top:0,behavior:'smooth'})}));
+}
+function clearHistory(){if(!getHistory().length){toast('ไม่มีประวัติให้ลบ');return}if(confirm('ต้องการลบประวัติการคำนวณทั้งหมดหรือไม่?')){localStorage.removeItem('physicsCalcHistory');renderHistory();toast('ลบประวัติแล้ว')}}
+function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+let toastTimer;function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2800)}
+init();
+</script>
+</body>
+</html>
